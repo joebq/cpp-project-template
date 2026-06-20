@@ -1,0 +1,4 @@
+// Suppress warnings from third-party and build directories
+*:*third_party/*
+*:*build/*
+*:*_deps/*

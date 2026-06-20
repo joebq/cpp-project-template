@@ -1,0 +1,163 @@
+<<<<<<< HEAD
+# ==================================
+# Build directories
+# ==================================
+build/
+out/
+cmake-build-*/
+
+# ==================================
+# CMake
+# ==================================
+CMakeUserPresets.json
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+CTestTestfile.cmake
+Testing/
+install_manifest.txt
+
+# ==================================
+# Code coverage
+# ==================================
+*.gcno
+*.gcda
+*.gcov
+coverage.info
+coverage_report/
+
+# ==================================
+# Compiled objects / binaries
+# ==================================
+*.o
+*.obj
+*.lo
+*.a
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+*.out
+*.app
+*.dSYM/
+
+# ==================================
+# Precompiled headers
+# ==================================
+*.gch
+*.pch
+
+# ==================================
+# IDE / Editor
+# ==================================
+.vscode/
+.vs/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# ==================================
+# OS files
+# ==================================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ==================================
+# Package managers
+# ==================================
+vcpkg_installed/
+conan/
+conanbuildinfo.*
+conaninfo.txt
+graph_info.json
+
+# ==================================
+# Dependency fetches
+# ==================================
+_deps/
+
+# ==================================
+# Misc
+# ==================================
+*.log
+*.tmp
+*.bak
+.env
+=======
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Linker files
+*.ilk
+
+# Debugger Files
+*.pdb
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+*.so.*
+
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Build directories
+build/
+Build/
+build-*/
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+install_manifest.txt
+compile_commands.json
+
+# Temporary files
+*.tmp
+*.log
+*.bak
+*.swp
+
+# vcpkg
+vcpkg_installed/
+
+# debug information files
+*.dwo
+
+# test output & cache
+Testing/
+.cache/
+>>>>>>> 459ba9c31f4084ed6d061a367162e6d711a47474

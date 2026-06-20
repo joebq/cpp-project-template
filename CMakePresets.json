@@ -1,0 +1,520 @@
+{
+  "version": 10,
+  "cmakeMinimumRequired": {
+    "major": 4,
+    "minor": 2,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+
+    {
+      "name": "base-clang",
+      "hidden": true,
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++"
+      }
+    },
+    {
+      "name": "base-apple-clang",
+      "hidden": true,
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "/usr/bin/clang",
+        "CMAKE_CXX_COMPILER": "/usr/bin/clang++"
+      }
+    },
+    {
+      "name": "base-gcc",
+      "hidden": true,
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++"
+      }
+    },
+    {
+      "name": "base-msvc",
+      "hidden": true,
+      "inherits": "base",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl",
+        "CMAKE_CXX_COMPILER": "cl"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+
+    {
+      "name": "clang-debug",
+      "displayName": "Clang Debug",
+      "inherits": "base-clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "clang-release",
+      "displayName": "Clang Release",
+      "inherits": "base-clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "clang-asan",
+      "displayName": "Clang Debug + Sanitizers",
+      "inherits": "base-clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_ASAN": "ON"
+      },
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:color=always"
+      }
+    },
+    {
+      "name": "clang-tsan",
+      "displayName": "Clang Debug + ThreadSanitizer",
+      "inherits": "base-clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_TSAN": "ON"
+      }
+    },
+    {
+      "name": "clang-coverage",
+      "displayName": "Clang Debug + Coverage",
+      "inherits": "base-clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_COVERAGE": "ON"
+      }
+    },
+    {
+      "name": "clang-fuzz",
+      "displayName": "Clang Fuzz (libFuzzer + ASan)",
+      "inherits": "base-clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_FUZZING": "ON",
+        "ENABLE_ASAN": "ON"
+      }
+    },
+
+    {
+      "name": "apple-debug",
+      "displayName": "Apple Clang Debug",
+      "inherits": "base-apple-clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+    {
+      "name": "apple-release",
+      "displayName": "Apple Clang Release",
+      "inherits": "base-apple-clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+    {
+      "name": "apple-asan",
+      "displayName": "Apple Clang Debug + Sanitizers",
+      "inherits": "base-apple-clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_ASAN": "ON"
+      },
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=0:color=always",
+        "MallocStackLogging": "1"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+    {
+      "name": "apple-tsan",
+      "displayName": "Apple Clang Debug + ThreadSanitizer",
+      "inherits": "base-apple-clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_TSAN": "ON"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+    {
+      "name": "apple-coverage",
+      "displayName": "Apple Clang Debug + Coverage",
+      "inherits": "base-apple-clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_COVERAGE": "ON"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+    {
+      "name": "apple-fuzz",
+      "displayName": "Apple Clang Fuzz (libFuzzer + ASan)",
+      "inherits": "base-apple-clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_FUZZING": "ON",
+        "ENABLE_ASAN": "ON"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+
+    {
+      "name": "gcc-debug",
+      "displayName": "GCC Debug",
+      "inherits": "base-gcc",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "gcc-release",
+      "displayName": "GCC Release",
+      "inherits": "base-gcc",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "gcc-asan",
+      "displayName": "GCC Debug + Sanitizers",
+      "inherits": "base-gcc",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_ASAN": "ON"
+      },
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:color=always"
+      }
+    },
+    {
+      "name": "gcc-tsan",
+      "displayName": "GCC Debug + ThreadSanitizer",
+      "inherits": "base-gcc",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_TSAN": "ON"
+      }
+    },
+
+    {
+      "name": "gcc-coverage",
+      "displayName": "GCC Debug + Coverage",
+      "inherits": "base-gcc",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_COVERAGE": "ON"
+      }
+    },
+
+    {
+      "name": "msvc-debug",
+      "displayName": "MSVC Debug",
+      "inherits": "base-msvc",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "msvc-release",
+      "displayName": "MSVC Release",
+      "inherits": "base-msvc",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "msvc-asan",
+      "displayName": "MSVC Debug + AddressSanitizer",
+      "inherits": "base-msvc",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_ASAN": "ON"
+      }
+    }
+  ],
+
+  "buildPresets": [
+    {
+      "name": "clang-debug",
+      "displayName": "Clang Debug Build",
+      "configurePreset": "clang-debug"
+    },
+    {
+      "name": "clang-release",
+      "displayName": "Clang Release Build",
+      "configurePreset": "clang-release"
+    },
+    {
+      "name": "clang-asan",
+      "displayName": "Clang ASan Build",
+      "configurePreset": "clang-asan"
+    },
+    {
+      "name": "clang-tsan",
+      "displayName": "Clang TSan Build",
+      "configurePreset": "clang-tsan"
+    },
+    {
+      "name": "clang-coverage",
+      "displayName": "Clang Coverage Build",
+      "configurePreset": "clang-coverage"
+    },
+    {
+      "name": "clang-fuzz",
+      "displayName": "Clang Fuzzer Build",
+      "configurePreset": "clang-fuzz"
+    },
+    {
+      "name": "apple-debug",
+      "displayName": "Apple Clang Debug Build",
+      "configurePreset": "apple-debug"
+    },
+    {
+      "name": "apple-release",
+      "displayName": "Apple Clang Release Build",
+      "configurePreset": "apple-release"
+    },
+    {
+      "name": "apple-asan",
+      "displayName": "Apple Clang ASan Build",
+      "configurePreset": "apple-asan"
+    },
+    {
+      "name": "apple-tsan",
+      "displayName": "Apple Clang TSan Build",
+      "configurePreset": "apple-tsan"
+    },
+    {
+      "name": "apple-coverage",
+      "displayName": "Apple Clang Coverage Build",
+      "configurePreset": "apple-coverage"
+    },
+    {
+      "name": "apple-fuzz",
+      "displayName": "Apple Clang Fuzzer Build",
+      "configurePreset": "apple-fuzz"
+    },
+    {
+      "name": "gcc-debug",
+      "displayName": "GCC Debug Build",
+      "configurePreset": "gcc-debug"
+    },
+    {
+      "name": "gcc-release",
+      "displayName": "GCC Release Build",
+      "configurePreset": "gcc-release"
+    },
+    {
+      "name": "gcc-asan",
+      "displayName": "GCC ASan Build",
+      "configurePreset": "gcc-asan"
+    },
+    {
+      "name": "gcc-tsan",
+      "displayName": "GCC TSan Build",
+      "configurePreset": "gcc-tsan"
+    },
+    {
+      "name": "gcc-coverage",
+      "displayName": "GCC Coverage Build",
+      "configurePreset": "gcc-coverage"
+    },
+    {
+      "name": "msvc-debug",
+      "displayName": "MSVC Debug Build",
+      "configurePreset": "msvc-debug"
+    },
+    {
+      "name": "msvc-release",
+      "displayName": "MSVC Release Build",
+      "configurePreset": "msvc-release"
+    },
+    {
+      "name": "msvc-asan",
+      "displayName": "MSVC ASan Build",
+      "configurePreset": "msvc-asan"
+    }
+  ],
+
+  "testPresets": [
+    {
+      "name": "clang-debug",
+      "displayName": "Tests (Clang Debug)",
+      "configurePreset": "clang-debug",
+      "output": {
+        "outputOnFailure": true,
+        "verbosity": "default"
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    },
+    {
+      "name": "clang-release",
+      "displayName": "Tests (Clang Release)",
+      "configurePreset": "clang-release",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    },
+    {
+      "name": "clang-coverage",
+      "displayName": "Tests (Clang Coverage)",
+      "configurePreset": "clang-coverage",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    },
+    {
+      "name": "apple-debug",
+      "displayName": "Tests (Apple Clang Debug)",
+      "configurePreset": "apple-debug",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    },
+    {
+      "name": "apple-release",
+      "displayName": "Tests (Apple Clang Release)",
+      "configurePreset": "apple-release",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    },
+    {
+      "name": "apple-coverage",
+      "displayName": "Tests (Apple Clang Coverage)",
+      "configurePreset": "apple-coverage",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    },
+    {
+      "name": "gcc-debug",
+      "displayName": "Tests (GCC Debug)",
+      "configurePreset": "gcc-debug",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    },
+    {
+      "name": "gcc-release",
+      "displayName": "Tests (GCC Release)",
+      "configurePreset": "gcc-release",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    },
+    {
+      "name": "gcc-coverage",
+      "displayName": "Tests (GCC Coverage)",
+      "configurePreset": "gcc-coverage",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    },
+    {
+      "name": "msvc-debug",
+      "displayName": "Tests (MSVC Debug)",
+      "configurePreset": "msvc-debug",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    },
+    {
+      "name": "msvc-release",
+      "displayName": "Tests (MSVC Release)",
+      "configurePreset": "msvc-release",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    }
+  ]
+}

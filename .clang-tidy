@@ -1,0 +1,77 @@
+---
+# CLion-style clang-tidy checks
+Checks: >
+  -*,
+  clang-diagnostic-*,
+  clang-analyzer-*,
+  bugprone-*,
+  cert-*,
+  concurrency-*,
+  cppcoreguidelines-*,
+  google-*,
+  hicpp-*,
+  misc-*,
+  modernize-*,
+  performance-*,
+  portability-*,
+  readability-*,
+  -bugprone-easily-swappable-parameters,
+  -cert-err58-cpp,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-avoid-non-const-global-variables,
+  -cppcoreguidelines-non-private-member-variables-in-classes,
+  -cppcoreguidelines-owning-memory,
+  -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+  -google-readability-todo,
+  -hicpp-no-array-decay,
+  -hicpp-signed-bitwise,
+  -misc-non-private-member-variables-in-classes,
+  -modernize-use-trailing-return-type,
+  -readability-braces-around-statements,
+  -readability-magic-numbers,
+  -hicpp-braces-around-statements
+
+WarningsAsErrors: '*'
+
+# Filter out third_party/, build/, and Catch2 headers
+HeaderFilterRegex: '^(?!.*(third_party|build|catch2|catch\.hpp|catch_all\.hpp)).*$'
+
+FormatStyle: file
+
+ExcludeHeaderFilterRegex: '.*(third_party|build|catch2).*'
+
+CheckOptions:
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key: readability-identifier-naming.FunctionCase
+    value: camelBack
+  - key: readability-identifier-naming.VariableCase
+    value: camelBack
+  - key: readability-identifier-naming.ConstantCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.NamespaceCase
+    value: lower_case
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumConstantCase
+    value: CamelCase
+  - key: readability-identifier-naming.ParameterCase
+    value: camelBack
+  - key: readability-identifier-naming.MemberCase
+    value: camelBack
+  - key: readability-identifier-naming.PrivateMemberSuffix
+    value: '_'
+  - key: misc-include-cleaner.IgnoreHeaders
+    value: 'catch2/.*;third_party/.*'
+  - key: bugprone-argument-comment.StrictMode
+    value: '0'
+  - key: cppcoreguidelines-special-member-functions.AllowSoleDefaultDtor
+    value: '1'
+  - key: performance-move-const-arg.CheckTriviallyCopyableMove
+    value: '0'
+  - key: readability-identifier-naming.ConstantCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.LocalVariableCase
+    value: aNy_CasE # Or 'lower_case', depending on your preference
+  - key: readability-identifier-naming.LocalConstantCase
+    value: aNy_CasE # This is the specific one to ignore UPPER_CASE for local consts

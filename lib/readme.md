@@ -1,0 +1,1 @@
+> this is where produced libraries by cmake `add_library()` function is used if the project aim is to create libraries

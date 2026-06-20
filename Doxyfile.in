@@ -1,0 +1,76 @@
+# Doxyfile.in — configured by CMake
+# Run via: cmake --build <build-dir> --target docs
+
+# ==================================
+# Project
+# ==================================
+PROJECT_NAME           = "@CMAKE_PROJECT_NAME@"
+PROJECT_BRIEF          = "C++ Project Template"
+PROJECT_NUMBER         = ""
+OUTPUT_DIRECTORY       = @CMAKE_BINARY_DIR@/docs
+
+# ==================================
+# Input
+# ==================================
+INPUT                  = @CMAKE_SOURCE_DIR@/src \
+                         @CMAKE_SOURCE_DIR@/include
+RECURSIVE              = YES
+FILE_PATTERNS          = *.cpp *.hpp *.h *.cxx *.hxx
+
+# Exclude build, test, third-party, and fuzzer directories
+EXCLUDE                = @CMAKE_SOURCE_DIR@/build \
+                         @CMAKE_SOURCE_DIR@/UnitTest \
+                         @CMAKE_SOURCE_DIR@/fuzzer \
+                         @CMAKE_SOURCE_DIR@/third_party
+
+# ==================================
+# Extraction
+# ==================================
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = YES
+
+# ==================================
+# Output formats
+# ==================================
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+HTML_COLORSTYLE        = LIGHT
+GENERATE_LATEX         = NO
+
+# ==================================
+# Source browsing
+# ==================================
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO
+STRIP_CODE_COMMENTS    = NO
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = YES
+
+# ==================================
+# Diagrams (requires Graphviz: brew install graphviz)
+# ==================================
+HAVE_DOT               = NO
+CLASS_DIAGRAMS         = YES
+COLLABORATION_GRAPH    = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+DOT_IMAGE_FORMAT       = svg
+INTERACTIVE_SVG        = YES
+
+# If Graphviz is installed, set HAVE_DOT = YES for richer diagrams
+
+# ==================================
+# Warnings
+# ==================================
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = YES
+
+# ==================================
+# Preprocessing
+# ==================================
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = NO
+SEARCH_INCLUDES        = YES

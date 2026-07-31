@@ -19,7 +19,7 @@ FILE_PATTERNS          = *.cpp *.hpp *.h *.cxx *.hxx
 
 # Exclude build, test, third-party, and fuzzer directories
 EXCLUDE                = @CMAKE_SOURCE_DIR@/build \
-                         @CMAKE_SOURCE_DIR@/UnitTest \
+                         @CMAKE_SOURCE_DIR@/test \
                          @CMAKE_SOURCE_DIR@/fuzzer \
                          @CMAKE_SOURCE_DIR@/third_party
 

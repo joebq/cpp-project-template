@@ -57,7 +57,7 @@ function(add_coverage_target test_target)
         # Remove system headers and test files from report
         COMMAND ${LCOV_PATH} --remove coverage.info
             "/usr/*"
-            "${CMAKE_SOURCE_DIR}/UnitTest/*"
+            "${CMAKE_SOURCE_DIR}/test/*"
             "${CMAKE_SOURCE_DIR}/third_party/*"
             "*/catch2/*"
             --output-file coverage.info

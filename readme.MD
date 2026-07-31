@@ -23,7 +23,7 @@ cppTemplate/
 │       ├── CMakeLists.txt
 │       ├── utility.cpp
 │       └── utility.hpp
-├── UnitTest/
+├── test/
 │   └── unittest.cpp             # Catch2 unit tests
 ├── fuzzer/
 │   └── fuzzer.cpp               # libFuzzer fuzz target
@@ -51,43 +51,43 @@ ctest --preset <preset-name>          # Run tests
 
 ### Clang
 
-| Preset | Description |
-|---|---|
-| `clang-debug` | Debug build |
-| `clang-release` | Release build |
-| `clang-asan` | Debug + AddressSanitizer / UBSan |
-| `clang-tsan` | Debug + ThreadSanitizer |
-| `clang-coverage` | Debug + code coverage |
-| `clang-fuzz` | Debug + libFuzzer + ASan |
+| Preset           | Description                      |
+| ---------------- | -------------------------------- |
+| `clang-debug`    | Debug build                      |
+| `clang-release`  | Release build                    |
+| `clang-asan`     | Debug + AddressSanitizer / UBSan |
+| `clang-tsan`     | Debug + ThreadSanitizer          |
+| `clang-coverage` | Debug + code coverage            |
+| `clang-fuzz`     | Debug + libFuzzer + ASan         |
 
 ### Apple Clang (macOS only)
 
-| Preset | Description |
-|---|---|
-| `apple-debug` | Debug build |
-| `apple-release` | Release build |
-| `apple-asan` | Debug + AddressSanitizer / UBSan |
-| `apple-tsan` | Debug + ThreadSanitizer |
-| `apple-coverage` | Debug + code coverage |
-| `apple-fuzz` | Debug + libFuzzer + ASan |
+| Preset           | Description                      |
+| ---------------- | -------------------------------- |
+| `apple-debug`    | Debug build                      |
+| `apple-release`  | Release build                    |
+| `apple-asan`     | Debug + AddressSanitizer / UBSan |
+| `apple-tsan`     | Debug + ThreadSanitizer          |
+| `apple-coverage` | Debug + code coverage            |
+| `apple-fuzz`     | Debug + libFuzzer + ASan         |
 
 ### GCC
 
-| Preset | Description |
-|---|---|
-| `gcc-debug` | Debug build |
-| `gcc-release` | Release build |
-| `gcc-asan` | Debug + AddressSanitizer / UBSan |
-| `gcc-tsan` | Debug + ThreadSanitizer |
-| `gcc-coverage` | Debug + code coverage |
+| Preset         | Description                      |
+| -------------- | -------------------------------- |
+| `gcc-debug`    | Debug build                      |
+| `gcc-release`  | Release build                    |
+| `gcc-asan`     | Debug + AddressSanitizer / UBSan |
+| `gcc-tsan`     | Debug + ThreadSanitizer          |
+| `gcc-coverage` | Debug + code coverage            |
 
 ### MSVC (Windows only)
 
-| Preset | Description |
-|---|---|
-| `msvc-debug` | Debug build |
-| `msvc-release` | Release build |
-| `msvc-asan` | Debug + AddressSanitizer |
+| Preset         | Description              |
+| -------------- | ------------------------ |
+| `msvc-debug`   | Debug build              |
+| `msvc-release` | Release build            |
+| `msvc-asan`    | Debug + AddressSanitizer |
 
 ## Building and Running Tests
 
@@ -124,6 +124,7 @@ open build/apple-coverage/coverage_report/index.html
 Replace `apple-coverage` with `clang-coverage` or `gcc-coverage` depending on your compiler.
 
 The `--target coverage` step does the following automatically:
+
 1. Resets any previous coverage counters
 2. Runs all tests via CTest
 3. Captures coverage data with `lcov`
@@ -140,11 +141,11 @@ ctest --preset apple-coverage
 
 Sanitizers are enabled via CMake options and are mutually exclusive (you cannot combine ASan with TSan).
 
-| Option | What it catches |
-|---|---|
+| Option        | What it catches                                                      |
+| ------------- | -------------------------------------------------------------------- |
 | `ENABLE_ASAN` | Memory errors (buffer overflow, use-after-free) + undefined behavior |
-| `ENABLE_TSAN` | Data races and threading issues |
-| `ENABLE_MSAN` | Uninitialized memory reads (Clang only) |
+| `ENABLE_TSAN` | Data races and threading issues                                      |
+| `ENABLE_MSAN` | Uninitialized memory reads (Clang only)                              |
 
 Use the corresponding preset (e.g. `clang-asan`, `gcc-tsan`) or pass the option manually:
 
@@ -229,14 +230,14 @@ Common Doxygen tags: `@brief`, `@param`, `@return`, `@throws`, `@note`, `@warnin
 
 ## CMake Options Reference
 
-| Option | Default | Description |
-|---|---|---|
-| `ENABLE_ASAN` | `OFF` | AddressSanitizer + UBSan |
-| `ENABLE_TSAN` | `OFF` | ThreadSanitizer |
-| `ENABLE_MSAN` | `OFF` | MemorySanitizer (Clang only) |
-| `ENABLE_COVERAGE` | `OFF` | Code coverage instrumentation (gcov/lcov) |
-| `ENABLE_FUZZING` | `OFF` | Build fuzz targets with libFuzzer |
-| `ENABLE_DOCS` | `OFF` | Build API documentation with Doxygen |
+| Option            | Default | Description                               |
+| ----------------- | ------- | ----------------------------------------- |
+| `ENABLE_ASAN`     | `OFF`   | AddressSanitizer + UBSan                  |
+| `ENABLE_TSAN`     | `OFF`   | ThreadSanitizer                           |
+| `ENABLE_MSAN`     | `OFF`   | MemorySanitizer (Clang only)              |
+| `ENABLE_COVERAGE` | `OFF`   | Code coverage instrumentation (gcov/lcov) |
+| `ENABLE_FUZZING`  | `OFF`   | Build fuzz targets with libFuzzer         |
+| `ENABLE_DOCS`     | `OFF`   | Build API documentation with Doxygen      |
 
 ## References
 
@@ -254,18 +255,21 @@ Common Doxygen tags: `@brief`, `@param`, `@return`, `@throws`, `@note`, `@warnin
 It depends on your priorities, but here's a quick breakdown:
 
 **vcpkg** — best default choice for most people
+
 - Microsoft-backed, huge package catalog
 - Integrates cleanly with CMake (manifest mode with `vcpkg.json`)
 - Works well cross-platform
 - Simple to get started
 
 **Conan** — best for complex/enterprise setups
+
 - More flexible (supports multiple build systems, not just CMake)
 - Better for managing private packages and custom configurations
 - Steeper learning curve
 - Strong versioning and dependency resolution
 
 **CPM (CPM.cmake)** — best for simplicity
+
 - Just a CMake script, no external tool to install
 - Fetches dependencies via `FetchContent` under the hood
 - Great for small-to-medium projects or header-only/CMake-based libs
@@ -285,6 +289,7 @@ Both vcpkg and Conan support this well:
 - **Conan**: Use a `conanfile.txt` or `conanfile.py` in your project root.
 
 **Why per-project wins:**
+
 - Reproducible builds — anyone cloning your repo gets the same deps
 - No version conflicts between projects
 - Easy to version-control the dependency list
@@ -302,6 +307,7 @@ No — the **declarations** live in your project, but the **installed files** go
 - **Conan**: `~/.conan2/` (global cache), packages are copied/linked into your build folder at build time
 
 So your project source tree stays clean. You just get:
+
 ```
 my-project/
 ├── vcpkg.json          # declaration (commit this)
@@ -321,10 +327,12 @@ The global cache means if two projects use the same version of a library, it's o
 **Update the version** in your manifest file, then the old version gets cleaned up naturally:
 
 **vcpkg:**
+
 1. Update the version in `vcpkg.json`
 2. Rebuild — `vcpkg_installed/` in your build dir gets updated automatically
 
 **Conan:**
+
 1. Update the version in `conanfile.txt`
 2. Run `conan install .` — your build gets the new version
 

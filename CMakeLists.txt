@@ -31,7 +31,7 @@ apply_coverage(myapp)
 # ==================================
 # Unit Tests
 # ==================================
-add_executable(testMain UnitTest/unittest.cpp)
+add_executable(testMain test/unittest.cpp)
 target_include_directories(testMain PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(testMain PRIVATE Catch2::Catch2WithMain Utility)
 disable_cppcheck(testMain)

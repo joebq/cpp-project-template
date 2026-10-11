@@ -1,0 +1,35 @@
+# clangd reads compile_commands.json from the repo root (copied by CMake Tools for the active preset).
+# The flags below make GCC-generated databases usable by clangd; they are no-ops for Clang builds.
+CompileFlags:
+  Add:
+    - -Wno-unknown-warning-option
+  Remove:
+    # Don't turn every warning into a hard error in the editor
+    - -Werror
+    # GCC-only warning variants clang rejects
+    - -Wformat-overflow*
+    - -Wformat-truncation*
+    - -Wstringop-overflow*
+    - -Warray-bounds=*
+    - -Wimplicit-fallthrough=*
+    # Instrumentation flags are irrelevant for analysis
+    - -fsanitize*
+    - -fno-sanitize*
+    - -fprofile*
+    - -ftest-coverage
+    - --coverage
+
+InlayHints:
+  Enabled: Yes
+  ParameterNames: Yes
+  DeducedTypes: Yes
+  Designators: Yes
+  BlockEnd: Yes
+  DefaultArguments: Yes
+  TypeNameLimit: 0
+
+Diagnostics:
+  UnusedIncludes: Strict
+  Suppress:
+    - unknown-warning-option
+    - drv_unknown_argument

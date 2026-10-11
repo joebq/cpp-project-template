@@ -68,6 +68,15 @@
       }
     },
     {
+      "name": "clang-modules",
+      "displayName": "Clang Debug + C++20 Modules",
+      "inherits": "base-clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_CXX_MODULES": "ON"
+      }
+    },
+    {
       "name": "clang-release",
       "displayName": "Clang Release",
       "inherits": "base-clang",

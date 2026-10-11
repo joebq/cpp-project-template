@@ -269,6 +269,10 @@ Common Doxygen tags: `@brief`, `@param`, `@return`, `@throws`, `@note`, `@warnin
 | `ENABLE_DOCS`     | `OFF`   | Build API documentation with Doxygen      |
 | `ENABLE_CXX_MODULES` | `OFF` | Also build C++20 module targets (headers stay available) |
 
+## License
+
+Released under the [MIT License](LICENSE). You are free to use, copy, modify, fork, and distribute this template (including commercially) without asking permission, as long as the copyright and license notice are kept.
+
 ## References
 
 - [Catch2](https://github.com/catchorg/Catch2)

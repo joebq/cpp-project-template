@@ -18,13 +18,16 @@ cppTemplate/
 │   └── catch2.cmake             # Catch2 test framework (FetchContent)
 ├── include/                     # Public headers
 ├── src/
-│   ├── main.cpp                 # Application entry point
+│   ├── main.cpp                 # Application entry point (header-based)
+│   ├── main_modules.cpp         # Entry point using `import utility;` (ENABLE_CXX_MODULES)
 │   └── utility/                 # Utility library
 │       ├── CMakeLists.txt
 │       ├── utility.cpp
-│       └── utility.hpp
+│       ├── utility.hpp
+│       └── utility.cppm         # C++20 module interface wrapping utility.hpp
 ├── test/
-│   └── unittest.cpp             # Catch2 unit tests
+│   ├── unittest.cpp             # Catch2 unit tests (headers)
+│   └── unittest_modules.cpp     # Catch2 unit tests (modules, ENABLE_CXX_MODULES)
 ├── fuzzer/
 │   └── fuzzer.cpp               # libFuzzer fuzz target
 └── third_party/                 # Third-party dependencies
@@ -59,6 +62,7 @@ ctest --preset <preset-name>          # Run tests
 | `clang-tsan`     | Debug + ThreadSanitizer          |
 | `clang-coverage` | Debug + code coverage            |
 | `clang-fuzz`     | Debug + libFuzzer + ASan         |
+| `clang-modules`  | Debug + C++20 modules targets    |
 
 ### Apple Clang (macOS only)
 
@@ -100,6 +104,31 @@ ctest --preset apple-debug
 ```
 
 Build output goes to `build/<preset-name>/`.
+
+## Headers and C++20 Modules
+
+Headers and modules live side by side in the same project. Header targets (`Utility`, `myapp`, `testMain`) are always built. Setting `ENABLE_CXX_MODULES=ON` additionally builds the module targets:
+
+| Target          | Description                                                       |
+| --------------- | ----------------------------------------------------------------- |
+| `UtilityModule` | Module library (`import utility;`), links the header `Utility`    |
+| `myapp_modules` | Example app that uses `import utility;`                           |
+| `testModules`   | Catch2 tests that use `import utility;`                           |
+
+```bash
+cmake --preset clang-modules
+cmake --build --preset clang-modules
+ctest --preset clang-modules
+```
+
+Or enable it on any other preset: `cmake --preset clang-debug -DENABLE_CXX_MODULES=ON`.
+
+How it works: [`src/utility/utility.cppm`](src/utility/utility.cppm) declares `export module utility;`, includes `utility.hpp` in the global module fragment and re-exports `Point` with `export using ::Point;`. The header stays the single source of truth, so consumers can choose either `#include "utility/utility.hpp"` or `import utility;`. To write a header-free module, put the definitions directly in a `.cppm` file and add it to a `FILE_SET CXX_MODULES` as in `src/utility/CMakeLists.txt`.
+
+Requirements for modules:
+
+- Ninja 1.11+ (or a Visual Studio generator) and CMake 3.28+ (this project already requires 4.2+)
+- A compiler with module support and a matching `clang-scan-deps` (for Clang, e.g. Homebrew LLVM: `brew install llvm`). Apple's `/usr/bin/clang` is untested here.
 
 ## Code Coverage
 
@@ -238,6 +267,7 @@ Common Doxygen tags: `@brief`, `@param`, `@return`, `@throws`, `@note`, `@warnin
 | `ENABLE_COVERAGE` | `OFF`   | Code coverage instrumentation (gcov/lcov) |
 | `ENABLE_FUZZING`  | `OFF`   | Build fuzz targets with libFuzzer         |
 | `ENABLE_DOCS`     | `OFF`   | Build API documentation with Doxygen      |
+| `ENABLE_CXX_MODULES` | `OFF` | Also build C++20 module targets (headers stay available) |
 
 ## References
 

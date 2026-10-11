@@ -320,6 +320,11 @@
       "configurePreset": "clang-fuzz"
     },
     {
+      "name": "clang-modules",
+      "displayName": "Clang Modules Build",
+      "configurePreset": "clang-modules"
+    },
+    {
       "name": "apple-debug",
       "displayName": "Apple Clang Debug Build",
       "configurePreset": "apple-debug"
@@ -392,6 +397,18 @@
   ],
 
   "testPresets": [
+    {
+      "name": "clang-modules",
+      "displayName": "Tests (Clang Modules)",
+      "configurePreset": "clang-modules",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    },
     {
       "name": "clang-debug",
       "displayName": "Tests (Clang Debug)",

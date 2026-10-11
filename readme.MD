@@ -109,11 +109,11 @@ Build output goes to `build/<preset-name>/`.
 
 Headers and modules live side by side in the same project. Header targets (`Utility`, `myapp`, `testMain`) are always built. Setting `ENABLE_CXX_MODULES=ON` additionally builds the module targets:
 
-| Target          | Description                                                       |
-| --------------- | ----------------------------------------------------------------- |
-| `UtilityModule` | Module library (`import utility;`), links the header `Utility`    |
-| `myapp_modules` | Example app that uses `import utility;`                           |
-| `testModules`   | Catch2 tests that use `import utility;`                           |
+| Target          | Description                                                    |
+| --------------- | -------------------------------------------------------------- |
+| `UtilityModule` | Module library (`import utility;`), links the header `Utility` |
+| `myapp_modules` | Example app that uses `import utility;`                        |
+| `testModules`   | Catch2 tests that use `import utility;`                        |
 
 ```bash
 cmake --preset clang-modules
@@ -259,19 +259,15 @@ Common Doxygen tags: `@brief`, `@param`, `@return`, `@throws`, `@note`, `@warnin
 
 ## CMake Options Reference
 
-| Option            | Default | Description                               |
-| ----------------- | ------- | ----------------------------------------- |
-| `ENABLE_ASAN`     | `OFF`   | AddressSanitizer + UBSan                  |
-| `ENABLE_TSAN`     | `OFF`   | ThreadSanitizer                           |
-| `ENABLE_MSAN`     | `OFF`   | MemorySanitizer (Clang only)              |
-| `ENABLE_COVERAGE` | `OFF`   | Code coverage instrumentation (gcov/lcov) |
-| `ENABLE_FUZZING`  | `OFF`   | Build fuzz targets with libFuzzer         |
-| `ENABLE_DOCS`     | `OFF`   | Build API documentation with Doxygen      |
-| `ENABLE_CXX_MODULES` | `OFF` | Also build C++20 module targets (headers stay available) |
-
-## License
-
-Released under the [MIT License](LICENSE). You are free to use, copy, modify, fork, and distribute this template (including commercially) without asking permission, as long as the copyright and license notice are kept.
+| Option               | Default | Description                                              |
+| -------------------- | ------- | -------------------------------------------------------- |
+| `ENABLE_ASAN`        | `OFF`   | AddressSanitizer + UBSan                                 |
+| `ENABLE_TSAN`        | `OFF`   | ThreadSanitizer                                          |
+| `ENABLE_MSAN`        | `OFF`   | MemorySanitizer (Clang only)                             |
+| `ENABLE_COVERAGE`    | `OFF`   | Code coverage instrumentation (gcov/lcov)                |
+| `ENABLE_FUZZING`     | `OFF`   | Build fuzz targets with libFuzzer                        |
+| `ENABLE_DOCS`        | `OFF`   | Build API documentation with Doxygen                     |
+| `ENABLE_CXX_MODULES` | `OFF`   | Also build C++20 module targets (headers stay available) |
 
 ## References
 
@@ -376,3 +372,7 @@ The global cache means if two projects use the same version of a library, it's o
 - **Conan**: `conan cache clean` or `conan remove "libname/old_version*"`
 
 In practice, don't worry too much about cleaning the cache unless you're tight on disk space. The cache is just a build optimization — nothing depends on it at runtime. If it ever gets bloated, you can nuke the entire cache folder and everything rebuilds on next build.
+
+## License
+
+Released under the [MIT License](LICENSE). You are free to use, copy, modify, fork, and distribute this template (including commercially) without asking permission, as long as the copyright and license notice are kept.
